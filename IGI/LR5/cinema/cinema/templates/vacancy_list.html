@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Актуальные вакансии</h1>
+<ul>
+    {% for vacancy in vacancies %}
+    <li>
+        <h3>{{ vacancy.title }}</h3>
+        <p>{{ vacancy.description }}</p>
+        <small>Опубликовано: {{ vacancy.published_at|date:"d.m.Y" }}</small>
+    </li>
+    {% empty %}
+    <li>На данный момент вакансий нет.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

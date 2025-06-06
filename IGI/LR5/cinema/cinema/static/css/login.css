@@ -1,0 +1,65 @@
+
+/* Контейнер формы */
+form {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+}
+
+/* Заголовок */
+h2 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+}
+
+/* Стили для полей формы */
+form p {
+    margin-bottom: 1.2rem;
+}
+
+form input[type="text"],
+form input[type="password"],
+form input[type="email"] {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: 0.2s ease;
+    box-sizing: border-box;
+}
+
+form input:focus {
+    border-color: #667eea;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3);
+}
+
+/* Кнопка */
+form button[type="submit"] {
+    width: 100%;
+    padding: 0.75rem;
+    background: #667eea;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s ease;
+    margin-top: 0.5rem;
+}
+
+form button[type="submit"]:hover {
+    background: #5a67d8;
+}
+
+form button[type="submit"]:active {
+    transform: translateY(1px);
+}

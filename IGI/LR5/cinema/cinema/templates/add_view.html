@@ -1,0 +1,17 @@
+{# reviews/templates/reviews/add_review.html #}
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Оставить отзыв для "{{ movie.title }}"</h2>
+
+{% if user.is_authenticated %}
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Отправить отзыв</button>
+</form>
+{% else %}
+<p>Чтобы оставить отзыв, <a href="{% url 'login' %}?next={{ request.path }}">войдите</a> или <a href="{% url 'register' %}">зарегистрируйтесь</a>.</p>
+{% endif %}
+
+{% endblock %}

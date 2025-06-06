@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/booking.css' %}">
+
+<div class="booking-container">
+  <h2>Выбор мест на {{ screening.movie.title }}</h2>
+  <div class="screen">Экран</div>
+
+  <!-- Легенда -->
+  <div class="seat-legend">
+    <div class="legend-item">
+      <div class="legend-color available"></div>
+      <span>Свободно</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-color booked"></div>
+      <span>Забронировано</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-color paid"></div>
+      <span>Оплачено</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-color selected"></div>
+      <span>Выбрано вами</span>
+    </div>
+  </div>
+  
+  <div class="seats-grid">
+    {% for row in rows %}
+    <div class="seat-row">
+      {% for seat in seats %}
+      {% with row_str=row|stringformat:"d" seat_str=seat|stringformat:"d" %}
+      {% with seat_id=row_str|add:"-"|add:seat_str %}
+      <div
+              class="seat
+              {% if seat_id in paid_seats %}paid{% endif %}
+              {% if seat_id in booked_seats %}booked{% endif %}"
+              data-row="{{ row }}"
+              data-seat="{{ seat }}">
+        {{ seat }}
+      </div>
+      {% endwith %}
+      {% endwith %}
+      {% endfor %}
+      <span class="row-number">Ряд {{ row }}</span>
+    </div>
+    {% endfor %}
+
+    <span class="row-number">Ряд {{ row }}</span>
+    </div>
+  
+  </div>
+
+  <form method="post" id="booking-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Забронировать</button>
+  </form>
+
+  {% if form.errors %}
+  <div class="alert alert-danger mt-3">
+    {% for error in form.non_field_errors %}
+    {{ error }}
+    {% endfor %}
+    {% for field in form %}
+    {% for error in field.errors %}
+    {{ error }}
+    {% endfor %}
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+
+<script>
+  document.querySelectorAll('.seat').forEach(seat => {
+      seat.addEventListener('click', () => {
+          // Проверяем, можно ли выбрать место
+          if (!seat.classList.contains('paid') && 
+              !seat.classList.contains('booked')) {
+              
+              // Устанавливаем значения в форму
+              document.getElementById('id_row').value = seat.dataset.row;
+              document.getElementById('id_seat').value = seat.dataset.seat;
+              
+              // Убираем выделение с других мест
+              document.querySelectorAll('.seat.selected').forEach(s => {
+                  s.classList.remove('selected');
+              });
+              
+              // Выделяем текущее место
+              seat.classList.add('selected');
+          }
+      });
+  });
+  
+  // Проверка перед отправкой
+  document.getElementById('booking-form').addEventListener('submit', function(e) {
+      if (!document.getElementById('id_row').value) {
+          e.preventDefault();
+          alert('Пожалуйста, выберите место!');
+      }
+  });
+  
+  console.log(document.querySelector('.seats-grid').innerHTML);
+</script>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h1>Новости</h1>
+<div class="news-list">
+    {% for article in articles %}
+    <div class="news-item">
+        <h2>{{ article.title }}</h2>
+        <img src="{{ article.image.url }}" alt="{{ article.title }}" style="max-width: 300px;">
+        <p>{{ article.summary }}</p>
+        <p><small>Опубликовано: {{ article.created_at|date:"d.m.Y H:i" }}</small></p>
+    </div>
+    {% empty %}
+    <p>Пока нет новостей.</p>
+    {% endfor %}
+</div>
+
+{% if is_paginated %}
+<div class="pagination">
+    {% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}">‹ Назад</a>
+    {% endif %}
+    <span>Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
+    {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}">Вперёд ›</a>
+    {% endif %}
+</div>
+{% endif %}
+{% endblock %}

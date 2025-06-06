@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/movie_list.css' %}">
+
+<h1>Фильмы</h1>
+
+<form method="get">
+    <label for="genre-select">Жанр:</label>
+    <select id="genre-select" name="genre">
+        <option value="">Все жанры</option>
+        {% for g in genres %}
+        <option value="{{ g.name }}"
+                {% if request.GET.genre == g.name %}selected{% endif %}>
+            {{ g.name }}
+        </option>
+        {% endfor %}
+    </select>
+    <button type="submit">Фильтровать</button>
+</form>
+
+<ul>
+    {% for movie in movies %}
+    <li>
+        <a href="{% url 'detail' movie.pk %}">
+            {{ movie.title }} ({{ movie.rating }})
+        </a>
+    </li>
+    {% empty %}
+    <li>Нет фильмов</li>
+    {% endfor %}
+</ul>
+
+{% if is_paginated %}
+<div class="pagination">
+    {% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.genre %}&genre={{ request.GET.genre }}{% endif %}">
+        ‹
+    </a>
+    {% endif %}
+    <span>Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
+    {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}{% if request.GET.genre %}&genre={{ request.GET.genre }}{% endif %}">
+        ›
+    </a>
+    {% endif %}
+</div>
+{% endif %}
+{% endblock %}

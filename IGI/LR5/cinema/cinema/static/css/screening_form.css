@@ -1,0 +1,140 @@
+/* Общие настройки */
+body {
+  background-color: #f5f7fa;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Контейнер формы */
+.container {
+  max-width: 700px;
+  margin: 40px auto;
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+}
+
+/* Заголовок */
+.container h1 {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* Группы полей */
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #555;
+}
+
+/* Инпуты и селекты */
+.container input[type="text"],
+.container input[type="number"],
+.container input[type="datetime-local"],
+.container select {
+  width: 100%;
+  padding: 0.65rem 1rem;
+  background: #fdfdfd;
+  border: 1px solid #ccd0d5;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+.container input:focus,
+.container select:focus {
+  border-color: #1abc9c;
+  box-shadow: 0 0 0 3px rgba(26, 188, 156, 0.2);
+  outline: none;
+}
+
+/* Сетка для времени */
+.row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.row .col-md-6 {
+  flex: 1 1 calc(50% - 0.5rem);
+  min-width: 200px;
+}
+
+/* Инпут-группа для цены */
+.input-group {
+  display: flex;
+  align-items: stretch;
+}
+
+.input-group input {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.input-group-append {
+  display: flex;
+  align-items: center;
+  padding: 0 0.75rem;
+  background: #e9ecef;
+  border: 1px solid #ccd0d5;
+  border-left: 0;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  font-size: 1rem;
+  color: #555;
+}
+
+/* Кнопки */
+.btn {
+  display: inline-block;
+  padding: 0.65rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-primary {
+  background-color: #1abc9c;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: #16a085;
+  transform: translateY(-1px);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.container a {
+  color: #1abc9c;
+  text-decoration: none;
+  font-weight: 500;
+  margin-left: 1rem;
+}
+
+.container a:hover {
+  text-decoration: underline;
+}
+
+.invalid-feedback {
+  color: #e74c3c;
+  font-size: 0. nine rem;
+  margin-top: 0.25rem;
+}

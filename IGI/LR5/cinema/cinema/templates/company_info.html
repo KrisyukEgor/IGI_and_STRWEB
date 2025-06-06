@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    {% if info %}
+    <h1>{{ info.name }}</h1>
+    <p>{{ info.description }}</p>
+
+    {% if info.logo %}
+    <img src="{{ info.logo.url }}" alt="Логотип" style="max-width:200px;">
+    {% endif %}
+
+    {% if info.video %}
+    <video controls style="max-width: 100%;">
+        <source src="{{ info.video.url }}" type="video/mp4">
+        Ваш браузер не поддерживает видео.
+    </video>
+    {% endif %}
+
+    <h3>История</h3>
+    <p>{{ info.history|linebreaks }}</p>
+
+    <h3>Реквизиты</h3>
+    <p>{{ info.requisites|linebreaks }}</p>
+    {% else %}
+    <p>Информация о компании пока не добавлена.</p>
+    {% endif %}
+</div>
+{% endblock %}

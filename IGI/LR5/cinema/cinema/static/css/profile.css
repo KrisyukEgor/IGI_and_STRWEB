@@ -1,0 +1,33 @@
+/* css/profile.css */
+body {
+    background-color: #f4f6f8;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 2.2rem;
+    color: #2c3e50;
+}
+
+.profile-card {
+    max-width: 500px;
+    margin: 40px auto;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.profile-card p {
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.profile-card strong {
+    display: inline-block;
+    width: 150px;
+    color: #555;
+}

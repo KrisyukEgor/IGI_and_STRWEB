@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+<h1>Мой профиль</h1>
+
+<div class="profile-card">
+    <p><strong>Email:</strong> {{ request.user.email }}</p>
+    <p><strong>Телефон:</strong>
+        {% if request.user.phone %}
+        {{ request.user.phone }}
+        {% else %}
+        Не указан
+        {% endif %}
+    </p>
+    <p><strong>Дата рождения:</strong>
+        {% if request.user.birth_date %}
+        {{ request.user.birth_date|date:"d.m.Y" }}
+        {% else %}
+        Не указана
+        {% endif %}
+    </p>
+</div>
+{% endblock %}

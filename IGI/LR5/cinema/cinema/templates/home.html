@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Последний добавленный фильм</h1>
+
+{% if last_movie %}
+<h2>{{ last_movie.title }}</h2>
+<p>Страна: {{ last_movie.country }}</p>
+<p>Длительность: {{ last_movie.duration }} мин</p>
+<p>Описание: {{ last_movie.description }}</p>
+{% if last_movie.poster %}
+<img src="{{ last_movie.poster.url }}" alt="{{ last_movie.title }}" style="max-width:300px;">
+{% endif %}
+{% else %}
+<p>Фильмы не найдены.</p>
+{% endif %}
+
+<h1>Последняя новость</h1>
+
+{% if last_news %}
+<h2>{{ last_news.title }}</h2>
+<p>{{ last_news.summary }}</p>
+{% if last_news.image %}
+<img src="{{ last_news.image.url }}" alt="{{ last_news.title }}" style="max-width:300px;">
+{% endif %}
+<p><small>Дата: {{ last_news.created_at|date:"d.m.Y H:i" }}</small></p>
+{% else %}
+<p>Новостей пока нет.</p>
+{% endif %}
+
+<h2>Календарь</h2>
+
+<pre style="font-family: monospace; background: #f8f9fa; padding: 1rem;">
+    {{ calendar_text }}
+</pre>
+
+{% endblock %}
+
+
+
+

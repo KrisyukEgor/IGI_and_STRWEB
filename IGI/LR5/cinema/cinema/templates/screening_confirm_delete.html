@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/screening_form.css' %}">
+
+<div class="container">
+    <h1>Удаление сеанса</h1>
+    <p>Вы действительно хотите удалить сеанс фильма <strong>«{{ screening.movie.title }}»</strong> в зале
+        <strong>{{ screening.hall.name }}</strong> на <strong>{{ screening.start_time|date:"d.m.Y H:i" }}</strong>?</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <button type="submit" class="btn btn-danger">
+                🗑️ Да, удалить
+            </button>
+            <a href="{% url 'screening_list' screening.movie.id %}" class="btn btn-link">
+                Отмена
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+
+<div class="dashboard-container">
+    <h1 class="dashboard-title">Мои билеты</h1>
+
+    <!-- Статистика -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-value">{{ ticket_stats.active }}</div>
+            <div class="stat-label">Активные билеты</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">{{ ticket_stats.paid }}</div>
+            <div class="stat-label">Оплаченные</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">{{ ticket_stats.unpaid }}</div>
+            <div class="stat-label">Неоплаченные</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">{{ ticket_stats.past }}</div>
+            <div class="stat-label">Завершенные</div>
+        </div>
+    </div>
+
+    <!-- Неоплаченные билеты -->
+    <div class="dashboard-section">
+        <h2 class="section-title">Требуют оплаты</h2>
+        {% if unpaid_tickets %}
+        <div class="tickets-grid">
+            {% for ticket in unpaid_tickets %}
+            <div class="ticket-card">
+                <div class="ticket-header">
+                    <h3>{{ ticket.screening.movie.title }}</h3>
+                    <span class="status booked">Не оплачен</span>
+                </div>
+                <div class="ticket-details">
+                    <p><i class="fas fa-calendar-alt"></i> {{ ticket.screening.start_time|date:"d M Y, H:i" }}</p>
+                    <p><i class="fas fa-theater-masks"></i> Зал: {{ ticket.screening.hall.name }}</p>
+                    <p><i class="fas fa-chair"></i> Место: {{ ticket.row }} ряд, {{ ticket.seat }} место</p>
+                </div>
+                <div class="ticket-actions">
+                    <a href="{% url 'payment' ticket_id=ticket.id %}" class="btn pay-btn">Оплатить</a>
+                    <a href="{% url 'ticket_detail' ticket_id=ticket.id %}" class="btn view-btn">Подробнее</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <i class="fas fa-check-circle"></i>
+            <p>Все билеты оплачены</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Оплаченные билеты -->
+    <div class="dashboard-section">
+        <h2 class="section-title">Оплаченные билеты</h2>
+        {% if paid_tickets %}
+        <div class="tickets-grid">
+            {% for ticket in paid_tickets %}
+            <div class="ticket-card">
+                <div class="ticket-header">
+                    <h3>{{ ticket.screening.movie.title }}</h3>
+                    <span class="status paid">Оплачен</span>
+                </div>
+                <div class="ticket-details">
+                    <p><i class="fas fa-calendar-alt"></i> {{ ticket.screening.start_time|date:"d M Y, H:i" }}</p>
+                    <p><i class="fas fa-theater-masks"></i> Зал: {{ ticket.screening.hall.name }}</p>
+                    <p><i class="fas fa-chair"></i> Место: {{ ticket.row }} ряд, {{ ticket.seat }} место</p>
+                </div>
+                <div class="ticket-actions">
+                    <a href="{% url 'ticket_detail' ticket_id=ticket.id %}" class="btn view-btn">Подробнее</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <i class="fas fa-ticket-alt"></i>
+            <p>Нет оплаченных билетов</p>
+            <a href="{% url 'list' %}" class="btn">Купить билет</a>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Завершенные сеансы -->
+    <div class="dashboard-section">
+        <h2 class="section-title">История посещений</h2>
+        {% if past_tickets %}
+        <div class="tickets-grid">
+            {% for ticket in past_tickets %}
+            <div class="ticket-card">
+                <div class="ticket-header">
+                    <h3>{{ ticket.screening.movie.title }}</h3>
+                    <span class="status past">Завершен</span>
+                </div>
+                <div class="ticket-details">
+                    <p><i class="fas fa-calendar-alt"></i> {{ ticket.screening.start_time|date:"d M Y, H:i" }}</p>
+                    <p><i class="fas fa-theater-masks"></i> Зал: {{ ticket.screening.hall.name }}</p>
+                    <p><i class="fas fa-chair"></i> Место: {{ ticket.row }} ряд, {{ ticket.seat }} место</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <i class="fas fa-history"></i>
+            <p>Вы еще не посещали сеансы</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Контакты</h1>
+<div class="contacts">
+    {% for contact in contacts %}
+    <div class="contact-card">
+        <img src="{{ contact.photo.url }}" alt="{{ contact.name }}" style="max-width: 150px;">
+        <h3>{{ contact.name }}</h3>
+        <p><strong>Должность:</strong> {{ contact.position }}</p>
+        <p><strong>Телефон:</strong> {{ contact.phone }}</p>
+        <p><strong>Email:</strong> {{ contact.email }}</p>
+    </div>
+    {% empty %}
+    <p>Контактная информация отсутствует.</p>
+    {% endfor %}
+</div>
+{% endblock %}

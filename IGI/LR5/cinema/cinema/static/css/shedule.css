@@ -1,0 +1,61 @@
+.container {
+    max-width: 900px;
+    margin: auto;
+    padding: 2rem;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.schedule h1 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: #333;
+}
+
+.screenings-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.screening-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease;
+}
+
+.screening-card:hover {
+    transform: translateY(-5px);
+}
+
+.screening-card h3 {
+    margin-top: 0;
+    font-size: 1.4rem;
+    color: #007bff;
+}
+
+.screening-card p {
+    margin: 0.5rem 0;
+    color: #444;
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+    color: white;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+.btn.primary {
+    background-color: #007bff;
+}
+.btn.primary:hover {
+    background-color: #0056b3;
+}

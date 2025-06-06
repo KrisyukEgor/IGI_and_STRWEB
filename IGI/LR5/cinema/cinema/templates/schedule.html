@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/shedule.css' %}">
+<h1>Расписание сеансов</h1>
+
+{% if user.is_admin %}
+<div class="actions-top">
+    <a href="{% url 'screening_add' %}" class="btn btn-secondary">➕ Добавить сеанс</a>
+</div>
+{% endif %}
+
+<div class="screenings-list">
+    {% for screening in screenings %}
+    <div class="screening-card">
+        <h3>{{ screening.movie.title }}</h3>
+        <p><strong>Зал:</strong> {{ screening.hall.name }}</p>
+        <p><strong>Время:</strong> {{ screening.start_time|date:"d.m.Y H:i" }}</p>
+        <p><strong>Цена:</strong> {{ screening.price }} руб.</p>
+
+        <div class="card-actions">
+            <a href="{% url 'booking' screening.id %}" class="btn btn-primary">🎟 Выбрать места</a>
+            {% if user.is_admin or user.is_cashier %}
+            <a href="{% url 'screening_edit' screening.id %}" class="btn btn-secondary btn-sm">✏️ Изменить</a>
+            {% endif %}
+            {% if user.is_admin %}
+            <a href="{% url 'screening_delete' screening.id %}" class="btn btn-danger btn-sm">🗑️ Удалить</a>
+            {% endif %}
+        </div>
+    </div>
+    {% empty %}
+    <p>Нет сеансов на выбранную дату.</p>
+    {% endfor %}
+</div>
+{% endblock %}

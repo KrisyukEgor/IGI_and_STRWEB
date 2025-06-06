@@ -1,0 +1,62 @@
+.container {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 0 1rem;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+.tickets-table {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.tickets-table thead {
+  background: #f0f0f0;
+}
+
+.tickets-table th,
+.tickets-table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #e1e1e1;
+}
+
+.tickets-table tbody tr:hover {
+  background: #fafafa;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.pagination a {
+  padding: 0.4rem 0.8rem;
+  background: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+.pagination span {
+  color: #555;
+}
+
+.revenue-summary {
+  margin: 1rem 0 2rem;
+  font-size: 1.25rem;
+  color: #2c3e50;
+}
+.revenue-summary strong {
+  color: #000;
+}

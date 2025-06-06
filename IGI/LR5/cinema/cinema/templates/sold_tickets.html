@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/sold_tickets.css' %}">
+
+<div class="container">
+    <h1>Все оплаченные билеты</h1>
+
+    {% if tickets %}
+    <table class="tickets-table">
+        <thead>
+        <tr>
+            <th>Пользователь</th>
+            <th>Фильм</th>
+            <th>Зал</th>
+            <th>Сеанс</th>
+            <th>Ряд</th>
+            <th>Место</th>
+            <th>Цена</th>
+            <th>Дата покупки</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for ticket in tickets %}
+        <tr>
+            <td>{{ ticket.user.email }}</td>
+            <td>{{ ticket.screening.movie.title }}</td>
+            <td>{{ ticket.screening.hall.name }}</td>
+            <td>{{ ticket.screening.start_time|date:"d.m.Y H:i" }}</td>
+            <td>{{ ticket.row }}</td>
+            <td>{{ ticket.seat }}</td>
+            <td>{{ ticket.screening.price }} ₽</td>
+            <td>{{ ticket.created_at|date:"d.m.Y H:i" }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="revenue-summary">
+        <strong>Общая выручка:</strong> {{ total_revenue }} ₽<br>
+        <strong>Средняя цена билета:</strong> {{ avg_ticket_price }} ₽<br>
+        <strong>Самый популярный фильм:</strong> {{ most_popular_movie }} ({{ most_popular_movie_count }} билетов)
+    </div>
+
+    {% else %}
+    <p>Пока нет оплаченных билетов.</p>
+    {% endif %}
+
+    <h2>Статистика проданных билетов по фильмам</h2>
+    <canvas id="ticketsChart" width="800" height="400"></canvas>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+{# Передаём данные в JS через json_script #}
+{{ chart_labels|json_script:"chart-labels" }}
+{{ chart_data|json_script:"chart-data" }}
+
+<script>
+    const labels = {{ chart_labels|safe }};
+    const data = {{ chart_data|safe }};
+
+    const ctx = document.getElementById('ticketsChart').getContext('2d');
+    const ticketsChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Количество проданных билетов',
+                data: data,
+                backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    stepSize: 1
+                }
+            }
+        }
+    });
+</script>
+
+{% endblock %}

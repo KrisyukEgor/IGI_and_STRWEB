@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/movie_details.css' %}">
+
+<section class="movie-detail">
+    <a href="{% url 'list' %}">Назад к списку фильмов</a>
+
+    <h1>{{ movie.title }}</h1>
+
+    {% if movie.poster %}
+    <div class="poster">
+        <img src="{{ movie.poster.url }}" alt="Постер {{ movie.title }}">
+    </div>
+    {% endif %}
+
+    <div class="movie-meta">
+        <p><strong>Жанры:</strong>
+            {% for g in movie.genres.all %}
+            {{ g.name }}{% if not forloop.last %}, {% endif %}
+            {% empty %}
+            Нет жанров
+            {% endfor %}
+        </p>
+        {% if movie.country %}
+        <p><strong>Страна:</strong> {{ movie.country }}</p>
+        {% endif %}
+        <p><strong>Длительность:</strong> {{ movie.duration }} мин.</p>
+        {% if movie.budget %}
+        <p><strong>Бюджет:</strong> {{ movie.budget }} $</p>
+        {% endif %}
+        <p><strong>Рейтинг:</strong> {{ movie.rating }}/10</p>
+    </div>
+
+    {% if movie.description %}
+    <div class="movie-description">
+        <h2>Описание</h2>
+        <p>{{ movie.description }}</p>
+    </div>
+    {% endif %}
+
+    <div class="schedule-link">
+        <a href="{% url 'screening_list' movie.id %}" class="btn btn-primary">
+            Купить билет
+        </a>
+    </div>
+    
+    <div class="reviews-section">
+        <h3>Отзывы ({{ reviews.count }})</h3>
+
+        <div class="reviews-list">
+            {% for review in reviews %}
+            <div class="review">
+                <div class="review-header">
+                    <strong>{{ review.author }}</strong>
+                    <span class="rating">{{ review.rating }}/10</span>
+                </div>
+                <p>{{ review.text }}</p>
+                <small>{{ review.created_at|date:"d.m.Y H:i" }}</small>
+            </div>
+            {% empty %}
+            <p>Пока нет отзывов</p>
+            {% endfor %}
+        </div>
+
+        {% if user.is_authenticated %}
+        <form method="post" class="review-form">
+            {% csrf_token %}
+            {{ review_form.as_p }}
+            <button type="submit" class="btn btn-primary">Оставить отзыв</button>
+        </form>
+        {% else %}
+        <div class="auth-required">
+            <p>Чтобы оставить отзыв, пожалуйста:</p>
+            <a href="{% url 'register' %}" class="btn btn-success">Зарегистрироваться</a>
+            <span>или</span>
+            <a href="{% url 'login' %}?next={{ request.path }}" class="btn btn-primary">Войти</a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+{% endblock %}
+
+
+
